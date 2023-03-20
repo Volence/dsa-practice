@@ -1,37 +1,25 @@
 // https://leetcode.com/problems/minimum-size-subarray-sum/
 
-// target = 7, nums = [2,3,1,2,4,3]
-// [1, 1, 1, 1, 1, 1, 23] O(2n)
-// currentSum = nums[start]
-// digits = 0
-// start = 0
+const minSubArrayLen = (target, nums) => {
+	let currentSum = nums[0]
+	let digits = 0
+	let start = 0
+	for(let i = 1; i < nums.length; i++ ) {
+		if(nums[i] >= target || nums[0] >= target) {
+		return 1
+		}
 
-// for i = 1; i < count(nums); i++ {
+		currentSum += nums[i]
 
-// 	if(currentSum >= target)
-//   {
-  
-//   	if(i-start < digits)
-//     {
-    
-//     	digits = i-start
-      
-//     }
-    
-//     currentSum -= nums[start]
-    
-//     start += 1
-    
-//     i -= 1
-    
-// 	} else {
-  
-// 	currentSum += nums[i]
-  
-//   	}
+		while(currentSum >= target) {
+		if(digits === 0) {
+			digits = i - start + 1
+		}
 
-// 	}
-  
-//   return digit
-  
-// }
+		digits = Math.min(digits, i - start + 1)
+		currentSum -= nums[start]
+		start += 1
+		}
+	}
+	return digits
+}
